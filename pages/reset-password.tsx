@@ -10,6 +10,12 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
   const [isValidToken, setIsValidToken] = useState(false)
+  const [authParams, setAuthParams] = useState<{ code: string | null, accessToken: string | null, refreshToken: string | null, type: string | null }>({
+    code: null,
+    accessToken: null,
+    refreshToken: null,
+    type: null
+  })
 
   useEffect(() => {
     // Check for both code-based and hash-based auth parameters
@@ -18,6 +24,7 @@ export default function ResetPassword() {
     
     const code = queryParams.get('code')
     const accessToken = hashParams.get('access_token')
+    const refreshToken = hashParams.get('refresh_token')
     const type = hashParams.get('type')
     
     console.log('Reset password debug:', { 
@@ -31,6 +38,9 @@ export default function ResetPassword() {
       actualCode: code,
       actualAccessToken: accessToken ? accessToken.substring(0, 10) + '...' : null
     })
+    
+    // Store the parameters for later use
+    setAuthParams({ code, accessToken, refreshToken, type })
     
     // Accept either format
     if (code || (accessToken && type === 'recovery')) {
@@ -59,15 +69,10 @@ export default function ResetPassword() {
     setMessage(null)
     
     try {
-      // Get auth parameters from URL (either format)
-      const queryParams = new URLSearchParams(window.location.search)
-      const hashParams = new URLSearchParams(window.location.hash.substring(1))
+      // Use stored auth parameters instead of re-parsing URL
+      const { code, accessToken, refreshToken, type } = authParams
       
-      const code = queryParams.get('code')
-      const accessToken = hashParams.get('access_token')
-      const type = hashParams.get('type')
-      
-      console.log('Attempting password reset with available parameters...')
+      console.log('Attempting password reset with stored parameters...')
       console.log('Form submission debug:', {
         code: code ? 'present' : 'null',
         accessToken: accessToken ? 'present' : 'null', 
@@ -83,7 +88,7 @@ export default function ResetPassword() {
         // Set the session and update password directly
         const { error: sessionError } = await supabase.auth.setSession({
           access_token: accessToken,
-          refresh_token: hashParams.get('refresh_token') || '',
+          refresh_token: refreshToken || '',
         })
         
         if (sessionError) {
