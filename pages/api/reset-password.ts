@@ -27,44 +27,66 @@ export default async function handler(
   }
 
   try {
-    console.log('API: Attempting to exchange code for session and update password')
+    console.log('API: Attempting to use admin auth to reset password')
     
-    // Try to exchange the code for a session first
-    const { data: sessionData, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
-
-    if (exchangeError) {
-      console.error('API: Code exchange failed:', exchangeError)
-      
-      // If PKCE exchange fails, try using verifyOtp as fallback
-      console.log('API: Trying verifyOtp as fallback...')
-      const { data: otpData, error: verifyError } = await supabase.auth.verifyOtp({
-        token_hash: code,
-        type: 'recovery'
+    // Try to verify the token_hash with admin client
+    console.log('API: Trying token_hash verification with admin client')
+    const { data: hashData, error: hashError } = await supabaseAdmin.auth.verifyOtp({
+      token_hash: code,
+      type: 'recovery'
+    })
+    
+    if (hashError) {
+      console.error('API: Admin hash verification failed:', hashError)
+      return res.status(400).json({ 
+        error: 'Invalid or expired reset code',
+        details: hashError.message 
       })
+    }
+    
+    console.log('API: Admin verification successful:', hashData)
 
-      if (verifyError) {
-        console.error('API: OTP verification also failed:', verifyError)
+    console.log('API: Attempting password update...')
+
+    // If we have a session from verification, use it to update password
+    if (hashData.session && hashData.user) {
+      console.log('API: Using verified session for password update')
+      
+      // Create a new supabase client with the verified session
+      const userSupabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      
+      // Set the session
+      const { error: sessionError } = await userSupabase.auth.setSession({
+        access_token: hashData.session.access_token,
+        refresh_token: hashData.session.refresh_token
+      })
+      
+      if (sessionError) {
+        console.error('API: Session setup failed:', sessionError)
         return res.status(400).json({ 
-          error: 'Invalid or expired reset code',
-          details: `Exchange: ${exchangeError.message}, OTP: ${verifyError.message}` 
+          error: 'Failed to establish user session',
+          details: sessionError.message 
         })
       }
       
-      console.log('API: OTP verification successful, session:', otpData)
+      // Update password with the user session
+      const { error: updateError } = await userSupabase.auth.updateUser({ password })
+      
+      if (updateError) {
+        console.error('API: Password update failed:', updateError)
+        return res.status(400).json({ 
+          error: 'Failed to update password',
+          details: updateError.message 
+        })
+      }
     } else {
-      console.log('API: Code exchange successful, session:', sessionData)
-    }
-
-    console.log('API: Session established, updating password...')
-
-    // Update the password
-    const { error: updateError } = await supabase.auth.updateUser({ password })
-
-    if (updateError) {
-      console.error('API: Password update failed:', updateError)
+      console.error('API: No session or user data from verification')
       return res.status(400).json({ 
-        error: 'Failed to update password',
-        details: updateError.message 
+        error: 'Verification succeeded but no session available',
+        details: 'Unable to establish user session for password update' 
       })
     }
 
