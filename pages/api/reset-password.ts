@@ -6,6 +6,12 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
+// Create admin client for more privileged operations
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -21,23 +27,35 @@ export default async function handler(
   }
 
   try {
-    console.log('API: Attempting to verify code and update password')
+    console.log('API: Attempting to exchange code for session and update password')
     
-    // Try to verify the OTP code
-    const { data, error: verifyError } = await supabase.auth.verifyOtp({
-      token_hash: code,
-      type: 'recovery'
-    })
+    // Try to exchange the code for a session first
+    const { data: sessionData, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
-    if (verifyError) {
-      console.error('API: OTP verification failed:', verifyError)
-      return res.status(400).json({ 
-        error: 'Invalid or expired reset code',
-        details: verifyError.message 
+    if (exchangeError) {
+      console.error('API: Code exchange failed:', exchangeError)
+      
+      // If PKCE exchange fails, try using verifyOtp as fallback
+      console.log('API: Trying verifyOtp as fallback...')
+      const { data: otpData, error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash: code,
+        type: 'recovery'
       })
+
+      if (verifyError) {
+        console.error('API: OTP verification also failed:', verifyError)
+        return res.status(400).json({ 
+          error: 'Invalid or expired reset code',
+          details: `Exchange: ${exchangeError.message}, OTP: ${verifyError.message}` 
+        })
+      }
+      
+      console.log('API: OTP verification successful, session:', otpData)
+    } else {
+      console.log('API: Code exchange successful, session:', sessionData)
     }
 
-    console.log('API: OTP verified, updating password...')
+    console.log('API: Session established, updating password...')
 
     // Update the password
     const { error: updateError } = await supabase.auth.updateUser({ password })
