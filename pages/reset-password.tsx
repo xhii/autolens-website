@@ -25,7 +25,9 @@ export default function ResetPassword() {
       accessToken: accessToken ? 'present' : 'null',
       type: type,
       search: window.location.search,
-      hash: window.location.hash
+      hash: window.location.hash,
+      fullHash: window.location.hash,
+      hashLength: window.location.hash.length
     })
     
     // Accept either format
