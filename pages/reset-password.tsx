@@ -13,14 +13,46 @@ export default function ResetPassword() {
 
   useEffect(() => {
     // Check if we have the necessary URL parameters for password reset
-    const hashParams = new URLSearchParams(window.location.hash.substring(1))
-    const type = hashParams.get('type')
-    const accessToken = hashParams.get('access_token')
+    // Supabase can send tokens in hash (#) or query (?) parameters
+    let type = null
+    let accessToken = null
+    
+    // Check hash parameters first (most common)
+    if (window.location.hash) {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1))
+      type = hashParams.get('type')
+      accessToken = hashParams.get('access_token')
+    }
+    
+    // If not found in hash, check query parameters
+    if (!type || !accessToken) {
+      const queryParams = new URLSearchParams(window.location.search)
+      type = type || queryParams.get('type')
+      accessToken = accessToken || queryParams.get('access_token')
+    }
+    
+    console.log('Reset password debug:', { type, accessToken, hash: window.location.hash, search: window.location.search })
     
     if (type === 'recovery' && accessToken) {
-      setIsValidToken(true)
+      // Set the session in Supabase with the access token
+      supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: '', // Not needed for password reset
+      }).then(({ error }) => {
+        if (error) {
+          console.error('Session error:', error)
+          setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+        } else {
+          setIsValidToken(true)
+          console.log('Valid reset token found and session set')
+        }
+      }).catch(err => {
+        console.error('Session setup failed:', err)
+        setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+      })
     } else {
       setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+      console.log('No valid reset token found')
     }
   }, [])
 
