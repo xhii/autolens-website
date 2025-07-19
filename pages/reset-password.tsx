@@ -12,44 +12,42 @@ export default function ResetPassword() {
   const [isValidToken, setIsValidToken] = useState(false)
 
   useEffect(() => {
-    // Handle Supabase auth callback for password reset
-    const handleAuthCallback = async () => {
-      const queryParams = new URLSearchParams(window.location.search)
-      const code = queryParams.get('code')
-      
-      console.log('Reset password debug:', { 
-        code, 
-        search: window.location.search,
-        hash: window.location.hash 
-      })
-      
-      if (code) {
-        try {
-          // Exchange the code for a session
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-          
-          if (error) {
-            console.error('Auth error:', error)
-            setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
-          } else {
-            console.log('Session established successfully:', data)
-            setIsValidToken(true)
-          }
-        } catch (err) {
-          console.error('Code exchange failed:', err)
-          setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
-        }
-      } else {
-        // Fallback: Check for legacy hash-based tokens
+    // Handle Supabase auth session on page load
+    const handleAuthSession = async () => {
+      try {
+        // Check if we have URL parameters that indicate a password reset
+        const queryParams = new URLSearchParams(window.location.search)
         const hashParams = new URLSearchParams(window.location.hash.substring(1))
+        
+        const code = queryParams.get('code')
         const type = hashParams.get('type')
         const accessToken = hashParams.get('access_token')
+        const refreshToken = hashParams.get('refresh_token')
         
+        console.log('Reset password debug:', { 
+          code, 
+          type,
+          accessToken: accessToken ? 'present' : 'null',
+          refreshToken: refreshToken ? 'present' : 'null',
+          search: window.location.search,
+          hash: window.location.hash 
+        })
+        
+        // Method 1: Try to get the session (works if auth flow already completed)
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+        
+        if (session) {
+          console.log('Found existing session:', session)
+          setIsValidToken(true)
+          return
+        }
+        
+        // Method 2: Handle hash-based tokens (direct token flow)
         if (type === 'recovery' && accessToken) {
           try {
             const { error } = await supabase.auth.setSession({
               access_token: accessToken,
-              refresh_token: '',
+              refresh_token: refreshToken || '',
             })
             
             if (error) {
@@ -57,20 +55,34 @@ export default function ResetPassword() {
               setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
             } else {
               setIsValidToken(true)
-              console.log('Legacy token processed successfully')
+              console.log('Session set from hash tokens')
             }
+            return
           } catch (err) {
-            console.error('Legacy session setup failed:', err)
-            setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+            console.error('Hash token session failed:', err)
           }
-        } else {
-          setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
-          console.log('No valid reset parameters found')
         }
+        
+        // Method 3: If we have a code but no session, the auth flow needs to complete
+        if (code) {
+          console.log('Found auth code, but this may require redirect flow completion')
+          // For password reset, we might need to wait for Supabase to handle the auth flow
+          // Set a temporary valid state and let the user try to reset
+          setIsValidToken(true)
+          return
+        }
+        
+        // No valid auth state found
+        setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+        console.log('No valid auth parameters found')
+        
+      } catch (err) {
+        console.error('Auth session handling failed:', err)
+        setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
       }
     }
     
-    handleAuthCallback()
+    handleAuthSession()
   }, [])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
@@ -90,6 +102,39 @@ export default function ResetPassword() {
     setMessage(null)
     
     try {
+      // Check if we have a valid session before trying to update password
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+      console.log('Current session when updating password:', session)
+      
+      if (!session) {
+        // Try to handle the auth code if present
+        const queryParams = new URLSearchParams(window.location.search)
+        const code = queryParams.get('code')
+        
+        if (code) {
+          console.log('No session found, but have code. Attempting to use verifyOtp...')
+          
+          // Try using verifyOtp for password reset flow
+          const { data, error: verifyError } = await supabase.auth.verifyOtp({
+            token_hash: code,
+            type: 'recovery'
+          })
+          
+          if (verifyError) {
+            console.error('OTP verification error:', verifyError)
+            setMessage({ type: 'error', text: 'Unable to verify reset token. Please request a new password reset.' })
+            setLoading(false)
+            return
+          }
+          
+          console.log('OTP verification successful:', data)
+        } else {
+          setMessage({ type: 'error', text: 'No valid session found. Please request a new password reset.' })
+          setLoading(false)
+          return
+        }
+      }
+      
       const { error } = await supabase.auth.updateUser({ password })
       
       if (error) throw error
@@ -103,6 +148,7 @@ export default function ResetPassword() {
         router.push('/reset-success')
       }, 3000)
     } catch (error: any) {
+      console.error('Password reset error:', error)
       setMessage({ type: 'error', text: error.message || 'Failed to reset password' })
     } finally {
       setLoading(false)
