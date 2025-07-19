@@ -16,7 +16,10 @@ export default function Home() {
     if (type === 'recovery' && hasToken) {
       // This is a password reset, redirect to the reset page
       console.log('Password reset detected, redirecting...')
-      router.push(`/reset-password${window.location.hash}${window.location.search}`)
+      console.log('Hash:', window.location.hash)
+      console.log('Search:', window.location.search)
+      // Use window.location to preserve hash parameters
+      window.location.href = `/reset-password${window.location.hash}${window.location.search}`
     }
   }, [router])
   
