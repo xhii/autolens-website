@@ -12,22 +12,42 @@ export default function ResetPassword() {
   const [isValidToken, setIsValidToken] = useState(false)
 
   useEffect(() => {
-    // Simple validation - just check if we have a code parameter
-    const queryParams = new URLSearchParams(window.location.search)
-    const code = queryParams.get('code')
-    
-    console.log('Reset password debug:', { 
-      code: code ? 'present' : 'null',
-      search: window.location.search 
-    })
-    
-    if (code) {
-      console.log('Found reset code, allowing password reset')
-      setIsValidToken(true)
-    } else {
-      setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
-      console.log('No reset code found')
+    const handleAuthCode = async () => {
+      const queryParams = new URLSearchParams(window.location.search)
+      const code = queryParams.get('code')
+      
+      console.log('Reset password debug:', { 
+        code: code ? 'present' : 'null',
+        search: window.location.search 
+      })
+      
+      if (code) {
+        console.log('Found reset code, attempting to exchange for session...')
+        
+        try {
+          // Try to exchange the code for a session using the simpler approach
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+          
+          if (error) {
+            console.error('Code exchange error:', error)
+            // If exchange fails, still allow the form but will need manual session handling
+            setIsValidToken(true)
+          } else {
+            console.log('Session established:', data)
+            setIsValidToken(true)
+          }
+        } catch (err) {
+          console.error('Code exchange failed:', err)
+          // Still allow the form - we'll handle session in password reset
+          setIsValidToken(true)
+        }
+      } else {
+        setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+        console.log('No reset code found')
+      }
     }
+    
+    handleAuthCode()
   }, [])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
@@ -47,26 +67,41 @@ export default function ResetPassword() {
     setMessage(null)
     
     try {
-      console.log('Attempting to update password directly...')
+      // Get the code from URL
+      const queryParams = new URLSearchParams(window.location.search)
+      const code = queryParams.get('code')
       
-      // Try to update password directly - Supabase should handle the auth state
-      const { error } = await supabase.auth.updateUser({ password })
-      
-      if (error) {
-        console.error('Password update error:', error)
-        
-        // If direct update fails, the user might need to be authenticated first
-        if (error.message.includes('session') || error.message.includes('authenticated')) {
-          setMessage({ type: 'error', text: 'Session expired. Please click the password reset link in your email again.' })
-        } else {
-          setMessage({ type: 'error', text: error.message || 'Failed to reset password' })
-        }
-        
+      if (!code) {
+        setMessage({ type: 'error', text: 'Reset code missing. Please click the reset link again.' })
         setLoading(false)
         return
       }
       
-      console.log('Password updated successfully!')
+      console.log('Sending password reset to API...')
+      
+      // Call our API endpoint to handle the password reset
+      const response = await fetch('/api/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code,
+          password: password
+        })
+      })
+      
+      const result = await response.json()
+      
+      if (!response.ok) {
+        console.error('API call failed:', response.status, result)
+        setMessage({ type: 'error', text: result.error || 'Failed to reset password. Please try again.' })
+        setLoading(false)
+        return
+      }
+      
+      console.log('Password reset successful:', result)
+      
       setMessage({ type: 'success', text: 'Password updated successfully! You can now log in with your new password.' })
       setPassword('')
       setConfirmPassword('')
@@ -78,7 +113,7 @@ export default function ResetPassword() {
       
     } catch (error: any) {
       console.error('Password reset error:', error)
-      setMessage({ type: 'error', text: error.message || 'Failed to reset password' })
+      setMessage({ type: 'error', text: 'Network error. Please check your connection and try again.' })
     } finally {
       setLoading(false)
     }
