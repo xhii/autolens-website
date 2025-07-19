@@ -1,6 +1,25 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function Home() {
+  const router = useRouter()
+  
+  useEffect(() => {
+    // Check if this is a password reset redirect
+    const hashParams = new URLSearchParams(window.location.hash.substring(1))
+    const queryParams = new URLSearchParams(window.location.search)
+    
+    const type = hashParams.get('type') || queryParams.get('type')
+    const hasToken = hashParams.get('access_token') || queryParams.get('code')
+    
+    if (type === 'recovery' && hasToken) {
+      // This is a password reset, redirect to the reset page
+      console.log('Password reset detected, redirecting...')
+      router.push(`/reset-password${window.location.hash}${window.location.search}`)
+    }
+  }, [router])
+  
   return (
     <>
       <Head>
