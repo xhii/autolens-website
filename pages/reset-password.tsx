@@ -27,7 +27,9 @@ export default function ResetPassword() {
       search: window.location.search,
       hash: window.location.hash,
       fullHash: window.location.hash,
-      hashLength: window.location.hash.length
+      hashLength: window.location.hash.length,
+      actualCode: code,
+      actualAccessToken: accessToken ? accessToken.substring(0, 10) + '...' : null
     })
     
     // Accept either format
@@ -66,6 +68,13 @@ export default function ResetPassword() {
       const type = hashParams.get('type')
       
       console.log('Attempting password reset with available parameters...')
+      console.log('Form submission debug:', {
+        code: code ? 'present' : 'null',
+        accessToken: accessToken ? 'present' : 'null', 
+        type: type,
+        actualCode: code,
+        actualAccessToken: accessToken ? accessToken.substring(0, 10) + '...' : null
+      })
       
       // Try hash-based flow first (preferred)
       if (accessToken && type === 'recovery') {
