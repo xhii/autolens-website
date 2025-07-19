@@ -12,42 +12,30 @@ export default function ResetPassword() {
   const [isValidToken, setIsValidToken] = useState(false)
 
   useEffect(() => {
-    const handleAuthCode = async () => {
-      const queryParams = new URLSearchParams(window.location.search)
-      const code = queryParams.get('code')
-      
-      console.log('Reset password debug:', { 
-        code: code ? 'present' : 'null',
-        search: window.location.search 
-      })
-      
-      if (code) {
-        console.log('Found reset code, attempting to exchange for session...')
-        
-        try {
-          // Try to exchange the code for a session using the simpler approach
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-          
-          if (error) {
-            console.error('Code exchange error:', error)
-            // If exchange fails, still allow the form but will need manual session handling
-            setIsValidToken(true)
-          } else {
-            console.log('Session established:', data)
-            setIsValidToken(true)
-          }
-        } catch (err) {
-          console.error('Code exchange failed:', err)
-          // Still allow the form - we'll handle session in password reset
-          setIsValidToken(true)
-        }
-      } else {
-        setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
-        console.log('No reset code found')
-      }
-    }
+    // Check for both code-based and hash-based auth parameters
+    const queryParams = new URLSearchParams(window.location.search)
+    const hashParams = new URLSearchParams(window.location.hash.substring(1))
     
-    handleAuthCode()
+    const code = queryParams.get('code')
+    const accessToken = hashParams.get('access_token')
+    const type = hashParams.get('type')
+    
+    console.log('Reset password debug:', { 
+      code: code ? 'present' : 'null',
+      accessToken: accessToken ? 'present' : 'null',
+      type: type,
+      search: window.location.search,
+      hash: window.location.hash
+    })
+    
+    // Accept either format
+    if (code || (accessToken && type === 'recovery')) {
+      console.log('Found reset parameters, allowing password reset form')
+      setIsValidToken(true)
+    } else {
+      setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' })
+      console.log('No valid reset parameters found')
+    }
   }, [])
 
   const handlePasswordReset = async (e: React.FormEvent) => {
@@ -67,40 +55,76 @@ export default function ResetPassword() {
     setMessage(null)
     
     try {
-      // Get the code from URL
+      // Get auth parameters from URL (either format)
       const queryParams = new URLSearchParams(window.location.search)
+      const hashParams = new URLSearchParams(window.location.hash.substring(1))
+      
       const code = queryParams.get('code')
+      const accessToken = hashParams.get('access_token')
+      const type = hashParams.get('type')
       
-      if (!code) {
-        setMessage({ type: 'error', text: 'Reset code missing. Please click the reset link again.' })
-        setLoading(false)
-        return
-      }
+      console.log('Attempting password reset with available parameters...')
       
-      console.log('Sending password reset to API...')
-      
-      // Call our API endpoint to handle the password reset
-      const response = await fetch('/api/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code: code,
-          password: password
+      // Try hash-based flow first (preferred)
+      if (accessToken && type === 'recovery') {
+        console.log('Using hash-based token approach')
+        
+        // Set the session and update password directly
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: hashParams.get('refresh_token') || '',
         })
-      })
-      
-      const result = await response.json()
-      
-      if (!response.ok) {
-        console.error('API call failed:', response.status, result)
-        setMessage({ type: 'error', text: result.error || 'Failed to reset password. Please try again.' })
+        
+        if (sessionError) {
+          console.error('Session error:', sessionError)
+          setMessage({ type: 'error', text: 'Reset link expired. Please request a new password reset.' })
+          setLoading(false)
+          return
+        }
+        
+        // Update password
+        const { error: updateError } = await supabase.auth.updateUser({ password })
+        
+        if (updateError) {
+          console.error('Password update error:', updateError)
+          setMessage({ type: 'error', text: updateError.message || 'Failed to update password' })
+          setLoading(false)
+          return
+        }
+        
+        console.log('Password updated successfully via hash tokens!')
+        
+      } else if (code) {
+        console.log('Using code-based API approach')
+        
+        // Fall back to API endpoint for code-based flow
+        const response = await fetch('/api/reset-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            code: code,
+            password: password
+          })
+        })
+        
+        const result = await response.json()
+        
+        if (!response.ok) {
+          console.error('API call failed:', response.status, result)
+          setMessage({ type: 'error', text: result.error || 'Failed to reset password. Please try again.' })
+          setLoading(false)
+          return
+        }
+        
+        console.log('Password reset successful via API:', result)
+        
+      } else {
+        setMessage({ type: 'error', text: 'No valid reset parameters found. Please click the reset link again.' })
         setLoading(false)
         return
       }
-      
-      console.log('Password reset successful:', result)
       
       setMessage({ type: 'success', text: 'Password updated successfully! You can now log in with your new password.' })
       setPassword('')
