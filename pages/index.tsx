@@ -163,7 +163,7 @@ export default function Home() {
 
       <footer>
         <div className="footer-wrapper">
-          <p>&copy; 2024 AutoLens Co.</p>
+          <p>&copy; 2025 AutoLens</p>
           <div className="footer-links">
             <Link href="#" className="footer-link">Privacy</Link>
             <Link href="#" className="footer-link">Terms</Link>
