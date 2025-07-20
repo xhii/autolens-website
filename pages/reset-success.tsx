@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -18,37 +19,49 @@ export default function ResetSuccess() {
     <>
       <Head>
         <title>Password Reset Successful - AutoLens</title>
-        <meta name="description" content="Your password has been reset successfully" />
+        <meta name="description" content="Your AutoLens password has been successfully reset" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
       </Head>
       
-      <main className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-md w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 text-center">
-            <div className="mb-6">
-              <svg className="w-20 h-20 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <main className="min-h-screen flex items-center justify-center p-4 bg-paper">
+        <div className="max-w-md w-full text-center">
+          <div className="bg-paper border-2 border-ink p-8 relative transform rotate-1">
+            <div className="absolute -top-8 -left-8 w-16 h-16 bg-mint border-2 border-ink flex items-center justify-center transform -rotate-3">
+              <svg className="w-8 h-8 text-paper" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </div>
             
-            <h1 className="text-3xl font-bold mb-4">Success!</h1>
+            <h1 className="text-3xl font-bold mb-4 font-space text-ink">Success!</h1>
             
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              Your password has been reset successfully. You can now log in to the AutoLens app with your new password.
+            <p className="text-ocean mb-8 text-lg">
+              Your password has been reset successfully. You can now log in to the AutoLens mobile app with your new password.
             </p>
             
-            <div className="bg-blue-50 dark:bg-blue-900 rounded-lg p-4 mb-6">
-              <p className="text-sm text-blue-800 dark:text-blue-200">
-                <strong>Next step:</strong> Open the AutoLens mobile app and log in with your new password.
+            <div className="space-y-4">
+              <p className="text-sm text-fog">Download the AutoLens app:</p>
+              
+              <div className="flex gap-4 justify-center">
+                <button className="px-6 py-3 bg-ink text-paper border-2 border-ink font-medium hover:transform hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0_var(--rust)] transition-all" disabled>
+                  <span className="text-xs">Coming Soon on</span><br />
+                  App Store
+                </button>
+                <button className="px-6 py-3 bg-ink text-paper border-2 border-ink font-medium hover:transform hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0_var(--rust)] transition-all" disabled>
+                  <span className="text-xs">Coming Soon on</span><br />
+                  Google Play
+                </button>
+              </div>
+              
+              <p className="text-sm text-fog mt-4">
+                Redirecting to home page in 5 seconds...
               </p>
             </div>
             
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Redirecting to home page in 5 seconds...
-            </p>
-            
-            <a href="/" className="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:underline">
-              Go to home page now
-            </a>
+            <div className="mt-8 pt-8 border-t-2 border-fog border-opacity-30">
+              <Link href="/" className="text-ocean hover:text-rust transition-colors font-medium">
+                Go to homepage now
+              </Link>
+            </div>
           </div>
         </div>
       </main>
