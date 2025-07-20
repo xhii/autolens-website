@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 export default function ResetPassword() {
@@ -164,22 +165,24 @@ export default function ResetPassword() {
       <Head>
         <title>Reset Password - AutoLens</title>
         <meta name="description" content="Reset your AutoLens password" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
       </Head>
       
-      <main className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
+      <main className="min-h-screen flex items-center justify-center p-4 bg-paper">
         <div className="max-w-md w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8">
-            <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="bg-paper border-2 border-ink p-8 relative">
+            <Link href="/" className="inline-block font-space text-3xl font-bold text-ink relative mb-8">
               AutoLens
-            </h1>
+              <span className="absolute -right-5 -top-2 text-rust text-sm">●</span>
+            </Link>
             
-            <h2 className="text-2xl font-semibold mb-6 text-center">Reset Your Password</h2>
+            <h2 className="text-2xl font-semibold mb-6 font-space">Reset Your Password</h2>
             
             {message && (
-              <div className={`mb-6 p-4 rounded-lg ${
+              <div className={`mb-6 p-4 border-2 ${
                 message.type === 'success' 
-                  ? 'bg-green-50 dark:bg-green-900 text-green-800 dark:text-green-200' 
-                  : 'bg-red-50 dark:bg-red-900 text-red-800 dark:text-red-200'
+                  ? 'bg-mint bg-opacity-20 border-mint text-ocean' 
+                  : 'bg-sunset bg-opacity-20 border-sunset text-rust'
               }`}>
                 {message.text}
               </div>
@@ -188,7 +191,7 @@ export default function ResetPassword() {
             {isValidToken && !message?.type && (
               <form onSubmit={handlePasswordReset} className="space-y-4">
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium mb-2">
+                  <label htmlFor="password" className="block text-sm font-medium mb-2 text-ocean">
                     New Password
                   </label>
                   <input
@@ -196,7 +199,7 @@ export default function ResetPassword() {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                    className="w-full px-4 py-2 border-2 border-ink focus:ring-2 focus:ring-rust focus:border-rust transition-colors bg-paper"
                     placeholder="Enter new password"
                     required
                     minLength={6}
@@ -204,7 +207,7 @@ export default function ResetPassword() {
                 </div>
                 
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2 text-ocean">
                     Confirm Password
                   </label>
                   <input
@@ -212,7 +215,7 @@ export default function ResetPassword() {
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                    className="w-full px-4 py-2 border-2 border-ink focus:ring-2 focus:ring-rust focus:border-rust transition-colors bg-paper"
                     placeholder="Confirm new password"
                     required
                     minLength={6}
@@ -222,7 +225,7 @@ export default function ResetPassword() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-rust text-paper border-2 border-rust font-semibold hover:transform hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0_var(--ink)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Resetting...' : 'Reset Password'}
                 </button>
@@ -230,9 +233,9 @@ export default function ResetPassword() {
             )}
             
             <div className="mt-6 text-center">
-              <a href="/" className="text-blue-600 dark:text-blue-400 hover:underline">
+              <Link href="/" className="text-ocean hover:text-rust transition-colors font-medium">
                 Back to AutoLens
-              </a>
+              </Link>
             </div>
           </div>
         </div>
