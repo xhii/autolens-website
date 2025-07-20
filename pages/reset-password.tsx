@@ -143,14 +143,14 @@ export default function ResetPassword() {
         return
       }
       
-      setMessage({ type: 'success', text: 'Password updated successfully! You can now log in with your new password.' })
+      setMessage({ type: 'success', text: 'Password updated successfully! Redirecting...' })
       setPassword('')
       setConfirmPassword('')
       
-      // Redirect to success page after 3 seconds
+      // Redirect to success page after 2 seconds
       setTimeout(() => {
         router.push('/reset-success')
-      }, 3000)
+      }, 2000)
       
     } catch (error: any) {
       console.error('Password reset error:', error)
