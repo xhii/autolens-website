@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.autolens.app",
+      "sha256_cert_fingerprints": [
+        "91:C8:C8:D2:E2:2B:3C:BC:0A:7B:87:4D:5B:B2:74:7A:06:E8:61:81:8C:64:5A:86:CB:37:3A:4C:B9:D2:3F:0A"
+      ]
+    }
+  }
+]
