@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "G5SRU8PGZN.com.xhil.AutoLens",
+        "paths": [
+          "/location/*"
+        ]
+      }
+    ]
+  }
+}
