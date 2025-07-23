@@ -5,7 +5,9 @@
       {
         "appID": "G5SRU8PGZN.com.xhil.AutoLens",
         "paths": [
-          "/location/*"
+          "/location/*",
+          "/racetrack/*",
+          "*"
         ]
       }
     ]
