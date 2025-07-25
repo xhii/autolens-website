@@ -1,9 +1,8 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/maps/track/:track/:filename",
-      "destination": "https://ahyaotlhwetdjfbeoblh.supabase.co/storage/v1/object/public/track-maps/:filename",
-      "statusCode": 302
+      "destination": "https://ahyaotlhwetdjfbeoblh.supabase.co/storage/v1/object/public/track-maps/:filename"
     }
   ]
 }
