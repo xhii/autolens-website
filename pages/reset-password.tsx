@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 
 export default function ResetPassword() {
@@ -171,9 +172,14 @@ export default function ResetPassword() {
       <main className="min-h-screen flex items-center justify-center p-4 bg-paper">
         <div className="max-w-md w-full">
           <div className="bg-paper border-2 border-ink p-8 relative">
-            <Link href="/" className="inline-block font-space text-3xl font-bold text-ink relative mb-8">
-              AutoLens
-              <span className="absolute -right-5 -top-2 text-rust text-sm">●</span>
+            <Link href="/" className="inline-block mb-8">
+              <Image
+                src="/autolens_logo.png"
+                alt="AutoLens"
+                width={240}
+                height={72}
+                priority
+              />
             </Link>
             
             <h2 className="text-2xl font-semibold mb-6 font-space">Reset Your Password</h2>

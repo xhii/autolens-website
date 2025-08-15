@@ -61,21 +61,15 @@
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <div style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '1.875rem',
-                fontWeight: '700',
-                color: '#ffffff',
-                position: 'relative'
-              }}>
-                AutoLens
-                <span style={{
-                  position: 'absolute',
-                  right: '-20px',
-                  top: '-8px',
-                  color: '#ff6b47',
-                  fontSize: '0.875rem'
-                }}>●</span>
+              <div>
+                <img 
+                  src="/autolens_logo.png" 
+                  alt="AutoLens" 
+                  style={{ 
+                    width: '240px', 
+                    height: '72px'
+                  }}
+                />
               </div>
             </div>
           </nav>

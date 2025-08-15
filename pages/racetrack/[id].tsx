@@ -61,21 +61,15 @@
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <div style={{
-                fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '1.875rem',
-                fontWeight: '700',
-                color: '#ffffff',
-                position: 'relative'
-              }}>
-                AutoLens
-                <span style={{
-                  position: 'absolute',
-                  right: '-20px',
-                  top: '-8px',
-                  color: '#ff6b47',
-                  fontSize: '0.875rem'
-                }}>●</span>
+              <div>
+                <img 
+                  src="/autolens_logo.png" 
+                  alt="AutoLens" 
+                  style={{ 
+                    width: '240px', 
+                    height: '72px'
+                  }}
+                />
               </div>
             </div>
           </nav>
@@ -116,9 +110,9 @@
                 borderRadius: '12px', 
                 padding: '1rem',
                 marginBottom: '1rem',
-                border: '1px solid rgba(255, 107, 71, 0.2)'
+                border: '1px solid rgba(231, 76, 60, 0.2)'
               }}>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: '#ff6b47' }}>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: '#E74C3C' }}>
                   🏁 Attempting to open AutoLens app...
                 </p>
               </div>
@@ -130,7 +124,7 @@
                 style={{
                   padding: '15px 30px',
                   fontSize: '16px',
-                  backgroundColor: '#ff6b47',
+                  backgroundColor: '#E74C3C',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '12px',

@@ -36,10 +36,15 @@ export default function Home() {
       </Head>
       
       <nav className="fixed top-0 w-full bg-paper z-50 border-b-2 border-ink">
-        <div className="max-w-[1400px] mx-auto px-8 py-6 flex justify-between items-center">
-          <Link href="/" className="font-space text-3xl font-bold text-ink relative">
-            AutoLens
-            <span className="absolute -right-5 -top-2 text-rust text-sm">●</span>
+        <div className="max-w-[1400px] mx-auto px-8 py-1 flex justify-between items-center">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/autolens_logo.png"
+              alt="AutoLens"
+              width={240}
+              height={72}
+              priority
+            />
           </Link>
           <div className="hidden md:flex gap-10 items-center">
             <Link href="#features" className="nav-link">Features</Link>
