@@ -540,10 +540,11 @@ footer {
     overflow-x: hidden;
   }
 
-  /* Mobile: Special layout structure */
+  /* Mobile: Clean centered layout */
   .hero-wrapper {
-    @apply flex-col gap-4;
+    @apply flex-col gap-6;
     max-width: 100%;
+    text-align: center;
   }
 
   .hero-content {
@@ -551,75 +552,36 @@ footer {
   }
 
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     transform: none;
   }
 
   .hero-subtitle {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-buttons {
-    @apply flex-col gap-3;
+    @apply flex-col gap-4;
+    align-items: center;
   }
 
   .btn-start, .btn-watch {
-    @apply w-full text-center;
-    padding: 0.875rem 1.25rem;
-    font-size: 0.95rem;
+    @apply text-center;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    max-width: 280px;
+    width: 100%;
   }
 
-  /* Mobile phones positioned below content */
+  /* Hide phones completely on mobile */
   .hero-visual {
-    order: 2;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .phones-container {
-    width: 100px;
-    height: 140px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .iphone {
-    @apply w-[60px] h-[110px];
-    border-radius: 14px;
-    border-width: 2px;
-    padding: 2px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    position: absolute;
-    flex-shrink: 0;
-  }
-
-  .iphone-screen {
-    border-radius: 10px;
-  }
-
-  .iphone-1 {
-    transform: rotate(-8deg);
-    z-index: 2;
-    left: 5px;
-    animation: none !important;
-  }
-
-  .iphone-2 {
-    transform: rotate(8deg);
-    z-index: 1;
-    left: 25px;
-    animation: none !important;
-  }
-
-  .stat-bubble {
     display: none;
   }
 
