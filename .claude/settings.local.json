@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm install)",
+      "Bash(del \"C:\\Users\\csxh\\OneDrive\\Desktop\\autolens-website\\public\\autolens-logo.svg\")",
+      "Bash(rm:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

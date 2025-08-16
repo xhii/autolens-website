@@ -489,70 +489,70 @@ footer {
 /* Mobile Responsive */
 @media (max-width: 768px) {
   /* Navigation */
-  .nav-link {
-    display: none;
-  }
-  
-  nav .max-w-\[1400px\] {
-    @apply px-4 py-2;
+  nav {
+    @apply border-b border-ink;
   }
 
-  /* Mobile logo sizing */
+  nav .max-w-\[1400px\] {
+    @apply px-4 py-3;
+  }
+
+  /* Mobile logo sizing - keep aspect ratio */
   nav img {
-    width: 160px !important;
-    height: 48px !important;
+    width: 120px !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+
+  /* Hide desktop nav items */
+  .nav-link, .nav-app-btn {
+    display: none !important;
   }
 
   /* Hero Section */
   .hero {
-    @apply pt-20 pb-8 px-4;
+    @apply pt-24 pb-12 px-4;
     min-height: auto;
   }
 
   .hero-wrapper {
-    @apply grid-cols-1 gap-8;
+    @apply grid-cols-1 gap-6;
   }
 
   .hero-title {
-    font-size: 2.5rem;
-    line-height: 1.1;
+    font-size: 2rem;
+    line-height: 1.2;
     margin-bottom: 1rem;
+    transform: none;
   }
 
   .hero-subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
   }
 
   .hero-buttons {
-    @apply flex-col gap-4 items-stretch;
+    @apply flex-col gap-3 items-stretch;
   }
 
-  .btn-start {
-    @apply text-center;
-    padding: 1rem 2rem;
+  .btn-start, .btn-watch {
+    @apply text-center w-full;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
   }
 
+  /* Remove/simplify phone mockups on mobile */
   .hero-visual {
-    @apply mb-4 h-[300px];
-    order: -1;
+    display: none;
   }
 
   .phones-container {
-    @apply h-[300px];
+    display: none;
   }
 
-  .iphone {
-    @apply w-[160px] h-[320px] relative;
-  }
-
-  .iphone-1 {
-    transform: rotate(-3deg) translateX(-20px);
-    margin-bottom: -80px;
-  }
-
-  .iphone-2 {
-    transform: rotate(3deg) translateX(20px);
+  .stat-bubble {
+    display: none;
   }
 
   /* Features */
@@ -644,24 +644,28 @@ footer {
 
 /* Small mobile breakpoint */
 @media (max-width: 480px) {
+  /* Even smaller logo on very small screens */
+  nav img {
+    width: 100px !important;
+    max-width: 100px !important;
+  }
+
+  nav .max-w-\[1400px\] {
+    @apply px-3;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
-  .iphone {
-    @apply w-[140px] h-[280px];
-  }
-
-  .hero-visual {
-    @apply h-[250px];
-  }
-
-  .phones-container {
-    @apply h-[250px];
+  .btn-start, .btn-watch {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
   }
 
   .quote-text {
@@ -669,6 +673,14 @@ footer {
   }
 
   .features-title {
+    font-size: 1.5rem;
+  }
+
+  .feature-card {
+    @apply p-4;
+  }
+
+  h2 {
     font-size: 1.75rem;
   }
 }

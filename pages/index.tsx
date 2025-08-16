@@ -44,6 +44,8 @@ export default function Home() {
               width={240}
               height={72}
               priority
+              className="w-[240px] h-[72px] md:w-[240px] md:h-[72px]"
+              style={{ width: 'auto', height: 'auto', maxWidth: '240px', maxHeight: '72px' }}
             />
           </Link>
           <div className="hidden md:flex gap-10 items-center">
@@ -52,6 +54,12 @@ export default function Home() {
             <Link href="#" className="nav-link">Stories</Link>
             <Link href="#download" className="nav-app-btn">Get the app</Link>
           </div>
+          {/* Mobile menu button */}
+          <button className="md:hidden p-2 text-ink">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </nav>
 
