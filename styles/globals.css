@@ -535,9 +535,8 @@ footer {
   }
 
   .hero-wrapper {
-    @apply grid-cols-2 gap-4;
+    @apply grid-cols-1 gap-6;
     max-width: 100%;
-    align-items: center;
   }
 
   .hero-content {
@@ -545,71 +544,72 @@ footer {
   }
 
   .hero-title {
-    font-size: 1.75rem;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
+    font-size: 2.25rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
     transform: none;
   }
 
   .hero-subtitle {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
   }
 
   .hero-buttons {
-    @apply flex-col gap-2;
+    @apply flex-col gap-3;
   }
 
   .btn-start, .btn-watch {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
+    @apply w-full text-center;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 
-  /* Clean mobile phone mockups - side by side */
+  /* Clean mobile phone mockups - stacked below */
   .hero-visual {
-    @apply h-[180px];
+    @apply h-[220px] mb-6;
     order: 2;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     max-width: 100%;
     overflow: hidden;
   }
 
   .phones-container {
-    @apply h-[180px];
+    @apply h-[220px];
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     max-width: 100%;
     position: relative;
   }
 
   .iphone {
-    @apply w-[80px] h-[140px];
-    border-radius: 16px;
+    @apply w-[110px] h-[200px];
+    border-radius: 20px;
     border-width: 2px;
-    padding: 2px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 4px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     position: absolute;
     flex-shrink: 0;
   }
 
   .iphone-screen {
-    border-radius: 12px;
+    border-radius: 16px;
   }
 
   .iphone-1 {
     transform: rotate(-5deg);
     z-index: 2;
-    left: 0;
+    left: -20px;
   }
 
   .iphone-2 {
     transform: rotate(5deg);
     z-index: 1;
-    left: 40px;
+    right: -20px;
   }
 
   .stat-bubble {
