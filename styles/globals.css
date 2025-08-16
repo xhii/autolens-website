@@ -535,8 +535,9 @@ footer {
   }
 
   .hero-wrapper {
-    @apply grid-cols-1 gap-8;
+    @apply grid-cols-2 gap-4;
     max-width: 100%;
+    align-items: center;
   }
 
   .hero-content {
@@ -544,71 +545,71 @@ footer {
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     line-height: 1.2;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     transform: none;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
   }
 
   .hero-buttons {
-    @apply flex-col gap-3 items-stretch;
+    @apply flex-col gap-2;
   }
 
   .btn-start, .btn-watch {
-    @apply text-center w-full;
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
 
-  /* Clean mobile phone mockups */
+  /* Clean mobile phone mockups - side by side */
   .hero-visual {
-    @apply h-[200px] mb-4;
+    @apply h-[180px];
     order: 2;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     max-width: 100%;
     overflow: hidden;
   }
 
   .phones-container {
-    @apply h-[200px];
+    @apply h-[180px];
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
     max-width: 100%;
+    position: relative;
   }
 
   .iphone {
-    @apply w-[100px] h-[180px];
-    border-radius: 20px;
+    @apply w-[80px] h-[140px];
+    border-radius: 16px;
     border-width: 2px;
-    padding: 3px;
+    padding: 2px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    position: relative;
+    position: absolute;
     flex-shrink: 0;
   }
 
   .iphone-screen {
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .iphone-1 {
-    transform: rotate(-3deg);
+    transform: rotate(-5deg);
     z-index: 2;
+    left: 0;
   }
 
   .iphone-2 {
-    transform: rotate(3deg);
+    transform: rotate(5deg);
     z-index: 1;
-    margin-left: -10px;
+    left: 40px;
   }
 
   .stat-bubble {
