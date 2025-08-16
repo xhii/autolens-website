@@ -535,81 +535,82 @@ footer {
   }
 
   .hero-wrapper {
-    @apply grid-cols-1 gap-6;
+    display: flex;
+    gap: 1rem;
     max-width: 100%;
+    align-items: center;
   }
 
   .hero-content {
-    order: 1;
+    flex: 1;
+    min-width: 0;
   }
 
   .hero-title {
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     transform: none;
   }
 
   .hero-subtitle {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
   }
 
   .hero-buttons {
-    @apply flex-col gap-3;
+    @apply flex-col gap-2;
   }
 
   .btn-start, .btn-watch {
-    @apply w-full text-center;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
   }
 
-  /* Clean mobile phone mockups - stacked below */
+  /* Phones positioned to the RIGHT of text */
   .hero-visual {
-    @apply h-[220px] mb-6;
-    order: 2;
+    flex: 0 0 120px;
+    height: 200px;
+    position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
-    max-width: 100%;
-    overflow: hidden;
+    justify-content: center;
   }
 
   .phones-container {
-    @apply h-[220px];
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
+    width: 120px;
+    height: 200px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .iphone {
-    @apply w-[110px] h-[200px];
-    border-radius: 20px;
+    @apply w-[70px] h-[130px];
+    border-radius: 16px;
     border-width: 2px;
-    padding: 4px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    padding: 2px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     position: absolute;
     flex-shrink: 0;
   }
 
   .iphone-screen {
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .iphone-1 {
-    transform: rotate(-5deg);
+    transform: rotate(-8deg);
     z-index: 2;
-    left: -20px;
+    left: -10px;
   }
 
   .iphone-2 {
-    transform: rotate(5deg);
+    transform: rotate(8deg);
     z-index: 1;
-    right: -20px;
+    right: -10px;
   }
 
   .stat-bubble {
