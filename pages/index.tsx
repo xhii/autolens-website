@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   const router = useRouter()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   
   useEffect(() => {
     // Check if this is a password reset redirect
@@ -55,12 +56,27 @@ export default function Home() {
             <Link href="#download" className="nav-app-btn">Get the app</Link>
           </div>
           {/* Mobile menu button */}
-          <button className="md:hidden p-2 text-ink">
+          <button 
+            className="md:hidden p-2 text-ink"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
+        
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-paper border-b-2 border-ink">
+            <div className="px-4 py-2 space-y-1">
+              <Link href="#features" className="block py-2 text-ink font-medium">Features</Link>
+              <Link href="#gallery" className="block py-2 text-ink font-medium">Spots</Link>
+              <Link href="#" className="block py-2 text-ink font-medium">Stories</Link>
+              <Link href="#download" className="block py-2 bg-ink text-paper text-center font-semibold">Get the app</Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       <section className="hero">

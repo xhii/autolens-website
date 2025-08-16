@@ -542,17 +542,60 @@ footer {
     font-size: 1rem;
   }
 
-  /* Remove/simplify phone mockups on mobile */
+  /* Clean mobile phone mockups */
   .hero-visual {
-    display: none;
+    @apply h-[200px] mb-6;
+    order: -1;
   }
 
   .phones-container {
-    display: none;
+    @apply h-[200px] justify-center;
+  }
+
+  .iphone {
+    @apply w-[120px] h-[200px] static;
+    border-radius: 20px;
+    border-width: 2px;
+    padding: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .iphone-screen {
+    border-radius: 16px;
+  }
+
+  .iphone-1 {
+    transform: none;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+
+  .iphone-2 {
+    transform: none;
+    margin-left: 1rem;
   }
 
   .stat-bubble {
     display: none;
+  }
+
+  /* Simplify phone content for mobile */
+  .screen-header {
+    @apply p-2 text-xs;
+  }
+
+  .demo-pin {
+    @apply w-[15px] h-[15px];
+    border-width: 1px;
+  }
+
+  .feed-item {
+    @apply h-[60px] mb-2;
+    border-width: 1px;
+  }
+
+  .feed-location {
+    @apply p-1 text-xs;
   }
 
   /* Features */
