@@ -535,43 +535,53 @@ footer {
   }
 
   .hero-wrapper {
-    display: flex;
-    gap: 1rem;
+    @apply flex-col gap-4;
     max-width: 100%;
-    align-items: center;
   }
 
-  .hero-content {
+  /* Top section: title + phones */
+  .hero-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-title-section {
     flex: 1;
     min-width: 0;
   }
 
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     line-height: 1.1;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
     transform: none;
   }
 
+  /* Bio section: full width below */
   .hero-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     line-height: 1.4;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    order: 2;
   }
 
+  /* Buttons section: full width at bottom */
   .hero-buttons {
-    @apply flex-col gap-2;
+    @apply flex-col gap-3;
+    order: 3;
   }
 
   .btn-start, .btn-watch {
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
+    @apply w-full text-center;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
   }
 
-  /* Phones positioned to the RIGHT of text */
+  /* Phones positioned to the RIGHT of title only */
   .hero-visual {
-    flex: 0 0 120px;
-    height: 200px;
+    flex: 0 0 100px;
+    height: 140px;
     position: relative;
     display: flex;
     align-items: center;
@@ -579,8 +589,8 @@ footer {
   }
 
   .phones-container {
-    width: 120px;
-    height: 200px;
+    width: 100px;
+    height: 140px;
     position: relative;
     display: flex;
     align-items: center;
@@ -588,8 +598,8 @@ footer {
   }
 
   .iphone {
-    @apply w-[70px] h-[130px];
-    border-radius: 16px;
+    @apply w-[60px] h-[110px];
+    border-radius: 14px;
     border-width: 2px;
     padding: 2px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -598,19 +608,19 @@ footer {
   }
 
   .iphone-screen {
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .iphone-1 {
     transform: rotate(-8deg);
     z-index: 2;
-    left: -10px;
+    left: -5px;
   }
 
   .iphone-2 {
     transform: rotate(8deg);
     z-index: 1;
-    right: -10px;
+    right: -5px;
   }
 
   .stat-bubble {
