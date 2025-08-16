@@ -540,42 +540,31 @@ footer {
     overflow-x: hidden;
   }
 
+  /* Mobile: Special layout structure */
   .hero-wrapper {
     @apply flex-col gap-4;
     max-width: 100%;
   }
 
-  /* Top section: title + phones */
-  .hero-top {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .hero-title-section {
-    flex: 1;
-    min-width: 0;
+  .hero-content {
+    order: 1;
   }
 
   .hero-title {
     font-size: 1.75rem;
     line-height: 1.1;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     transform: none;
   }
 
-  /* Bio section: full width below */
   .hero-subtitle {
     font-size: 0.95rem;
     line-height: 1.4;
     margin-bottom: 1.5rem;
-    order: 2;
   }
 
-  /* Buttons section: full width at bottom */
   .hero-buttons {
     @apply flex-col gap-3;
-    order: 3;
   }
 
   .btn-start, .btn-watch {
@@ -584,11 +573,10 @@ footer {
     font-size: 0.95rem;
   }
 
-  /* Phones positioned to the RIGHT of title only */
+  /* Mobile phones positioned below content */
   .hero-visual {
-    flex: 0 0 100px;
+    order: 2;
     height: 140px;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;

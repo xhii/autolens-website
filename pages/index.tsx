@@ -81,54 +81,49 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-wrapper">
-          {/* Top section: title + phones */}
-          <div className="hero-top">
-            <div className="hero-title-section">
-              <h1 className="hero-title">
-                Find spots.<br/>Take <span className="hero-accent">shots</span>.
-              </h1>
+          <div className="hero-content">
+            <h1 className="hero-title">
+              Find spots.<br/>Take <span className="hero-accent">shots</span>.
+            </h1>
+            <p className="hero-subtitle">
+              The underground map for car photographers. Real locations shared by real shooters.
+            </p>
+            <div className="hero-buttons">
+              <Link href="#download" className="btn-start">Start exploring</Link>
+              <Link href="#" className="btn-watch">Watch 2min intro</Link>
             </div>
-            <div className="hero-visual">
-              <div className="phones-container">
-                <div className="iphone iphone-1">
-                  <div className="iphone-screen map-screen">
-                    <div className="screen-header">📍 Nearby Spots</div>
-                    <div className="map-pins-demo">
-                      <div className="demo-pin demo-pin-1"></div>
-                      <div className="demo-pin demo-pin-2"></div>
-                      <div className="demo-pin demo-pin-3"></div>
-                    </div>
+          </div>
+          <div className="hero-visual">
+            <div className="phones-container">
+              <div className="iphone iphone-1">
+                <div className="iphone-screen map-screen">
+                  <div className="screen-header">📍 Nearby Spots</div>
+                  <div className="map-pins-demo">
+                    <div className="demo-pin demo-pin-1"></div>
+                    <div className="demo-pin demo-pin-2"></div>
+                    <div className="demo-pin demo-pin-3"></div>
                   </div>
                 </div>
-                <div className="iphone iphone-2">
-                  <div className="iphone-screen feed-screen">
-                    <div className="screen-header">🔥 Recent Shots</div>
-                    <div className="photo-feed">
-                      <div className="feed-item">
-                        <div className="feed-location">Pacific Coast Highway</div>
-                      </div>
-                      <div className="feed-item feed-item-2">
-                        <div className="feed-location">Downtown Parking Garage</div>
-                      </div>
-                      <div className="feed-item feed-item-3">
-                        <div className="feed-location">Mountain Pass</div>
-                      </div>
+              </div>
+              <div className="iphone iphone-2">
+                <div className="iphone-screen feed-screen">
+                  <div className="screen-header">🔥 Recent Shots</div>
+                  <div className="photo-feed">
+                    <div className="feed-item">
+                      <div className="feed-location">Pacific Coast Highway</div>
+                    </div>
+                    <div className="feed-item feed-item-2">
+                      <div className="feed-location">Downtown Parking Garage</div>
+                    </div>
+                    <div className="feed-item feed-item-3">
+                      <div className="feed-location">Mountain Pass</div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="stat-bubble stat-bubble-1">8,437 spots</div>
+              <div className="stat-bubble stat-bubble-2">127 tracks</div>
             </div>
-          </div>
-          
-          {/* Bio section: full width */}
-          <p className="hero-subtitle">
-            The underground map for car photographers. Real locations shared by real shooters.
-          </p>
-          
-          {/* Buttons section: full width */}
-          <div className="hero-buttons">
-            <Link href="#download" className="btn-start">Start exploring</Link>
-            <Link href="#" className="btn-watch">Watch 2min intro</Link>
           </div>
         </div>
       </section>
