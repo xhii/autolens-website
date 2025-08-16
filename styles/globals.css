@@ -506,6 +506,12 @@ footer {
     display: none;
   }
 
+  /* Disable all phone animations on mobile */
+  .iphone-1, .iphone-2 {
+    animation: none !important;
+    transition: none !important;
+  }
+
   /* Navigation */
   nav {
     @apply border-b border-ink;
@@ -594,7 +600,7 @@ footer {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .iphone {
@@ -614,13 +620,15 @@ footer {
   .iphone-1 {
     transform: rotate(-8deg);
     z-index: 2;
-    left: -5px;
+    left: 0px;
+    animation: none !important;
   }
 
   .iphone-2 {
     transform: rotate(8deg);
     z-index: 1;
-    right: -5px;
+    left: 35px;
+    animation: none !important;
   }
 
   .stat-bubble {
