@@ -290,18 +290,6 @@ h2 {
   @apply py-24 px-8 bg-paper relative;
 }
 
-.features::before {
-  content: '002';
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 6rem;
-  font-weight: 700;
-  color: var(--fog);
-  opacity: 0.2;
-  z-index: 1;
-}
 
 .features-wrapper {
   @apply max-w-[1400px] mx-auto;
