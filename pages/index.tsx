@@ -33,6 +33,8 @@ export default function Home() {
         <meta name="description" content="The underground map for car photographers. Real locations shared by real shooters." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
       </Head>
       
