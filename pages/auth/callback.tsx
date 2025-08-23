@@ -12,96 +12,169 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        // Get the session from the URL
-        const { data, error } = await supabase.auth.getSession();
+        // Get parameters from URL hash fragment
+        const hashFragment = window.location.hash.substring(1);
+        const hashParams = new URLSearchParams(hashFragment);
+        const queryParams = new URLSearchParams(window.location.search);
         
-        if (error) throw error;
+        const type = hashParams.get('type') || queryParams.get('type');
+        const error = hashParams.get('error') || queryParams.get('error');
+        const error_description = hashParams.get('error_description') || queryParams.get('error_description');
+        const access_token = hashParams.get('access_token') || queryParams.get('access_token');
+        const refresh_token = hashParams.get('refresh_token') || queryParams.get('refresh_token');
+        const code = queryParams.get('code');
 
-        if (data.session) {
-          setStatus('success');
-          setMessage('Authentication successful! Redirecting to app...');
-          
-          // Redirect to app after 2 seconds
-          setTimeout(() => {
-            // Deep link to open the mobile app if installed
-            window.location.href = 'autolens://auth/success';
-            
-            // Fallback to app store after 1 second if app doesn't open
-            setTimeout(() => {
-              const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-              if (isIOS) {
-                window.location.href = 'https://apps.apple.com/app/autolens/id[YOUR_APP_ID]';
-              } else {
-                window.location.href = 'https://play.google.com/store/apps/details?id=com.autolens.app';
-              }
-            }, 1000);
-          }, 2000);
-        } else {
-          // Check for auth code in URL to exchange for session
-          const hashParams = new URLSearchParams(window.location.hash.substring(1));
-          const queryParams = new URLSearchParams(window.location.search);
-          
-          const access_token = hashParams.get('access_token') || queryParams.get('access_token');
-          const refresh_token = hashParams.get('refresh_token') || queryParams.get('refresh_token');
-          const code = queryParams.get('code');
+        console.log('Auth callback - type:', type, 'access_token present:', !!access_token);
 
-          if (access_token && refresh_token) {
-            // Set session with tokens
-            const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
-              access_token,
-              refresh_token
-            });
-
-            if (sessionError) throw sessionError;
-
-            setStatus('success');
-            setMessage('Authentication successful! Redirecting to app...');
-            
-            // Redirect to app
-            setTimeout(() => {
-              window.location.href = 'autolens://auth/success';
-              setTimeout(() => {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                if (isIOS) {
-                  window.location.href = 'https://apps.apple.com/app/autolens/id[YOUR_APP_ID]';
-                } else {
-                  window.location.href = 'https://play.google.com/store/apps/details?id=com.autolens.app';
-                }
-              }, 1000);
-            }, 2000);
-          } else if (code) {
-            // Exchange code for session
-            const { data: codeData, error: codeError } = await supabase.auth.exchangeCodeForSession(code);
-            
-            if (codeError) throw codeError;
-
-            setStatus('success');
-            setMessage('Authentication successful! Redirecting to app...');
-            
-            // Redirect to app
-            setTimeout(() => {
-              window.location.href = 'autolens://auth/success';
-              setTimeout(() => {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                if (isIOS) {
-                  window.location.href = 'https://apps.apple.com/app/autolens/id[YOUR_APP_ID]';
-                } else {
-                  window.location.href = 'https://play.google.com/store/apps/details?id=com.autolens.app';
-                }
-              }, 1000);
-            }, 2000);
-          } else {
-            throw new Error('No authentication data found');
-          }
+        // Handle errors first
+        if (error) {
+          console.error('Auth error:', error_description);
+          setStatus('error');
+          setMessage(`Authentication failed: ${error_description || error}`);
+          return;
         }
+
+        // Route based on auth type
+        switch(type) {
+          case 'recovery':
+            // This is a PASSWORD RESET
+            console.log('Handling password reset');
+            setMessage('Processing password reset...');
+            
+            // Set the session for password reset
+            if (access_token && refresh_token) {
+              await supabase.auth.setSession({
+                access_token,
+                refresh_token
+              });
+            }
+            
+            // Redirect to password reset form with hash preserved
+            window.location.href = `/reset-password#${hashFragment}`;
+            break;
+
+          case 'signup':
+          case 'email':
+            // This is EMAIL CONFIRMATION
+            console.log('Handling email confirmation');
+            setMessage('Confirming email...');
+            
+            // Set the session for email confirmation
+            if (access_token && refresh_token) {
+              const { data, error } = await supabase.auth.setSession({
+                access_token,
+                refresh_token
+              });
+              
+              if (error) throw error;
+            }
+            
+            // Email confirmed successfully
+            setStatus('success');
+            setMessage('Email confirmed successfully! Opening AutoLens app...');
+            
+            // Try to open mobile app, fallback to app store
+            setTimeout(() => {
+              // Deep link to open the mobile app
+              window.location.href = 'autolens://auth/confirmed';
+              
+              // Fallback to app store if app doesn't open
+              setTimeout(() => {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                if (isIOS) {
+                  window.location.href = 'https://apps.apple.com/app/autolens/id[YOUR_APP_ID]';
+                } else {
+                  window.location.href = 'https://play.google.com/store/apps/details?id=com.autolens.app';
+                }
+              }, 1500);
+            }, 2000);
+            break;
+
+          case 'magiclink':
+            // Handle magic link login if you implement it later
+            console.log('Handling magic link');
+            if (access_token && refresh_token) {
+              await supabase.auth.setSession({
+                access_token,
+                refresh_token
+              });
+            }
+            setStatus('success');
+            setMessage('Login successful! Opening AutoLens app...');
+            setTimeout(() => {
+              window.location.href = 'autolens://auth/login';
+              setTimeout(() => {
+                window.location.href = '/';
+              }, 1000);
+            }, 2000);
+            break;
+
+          default:
+            // Handle OAuth code exchange or unknown types
+            if (code) {
+              console.log('Handling OAuth code exchange');
+              setMessage('Processing login...');
+              
+              const { data: codeData, error: codeError } = await supabase.auth.exchangeCodeForSession(code);
+              if (codeError) throw codeError;
+
+              setStatus('success');
+              setMessage('Login successful! Opening AutoLens app...');
+              setTimeout(() => {
+                window.location.href = 'autolens://auth/login';
+                setTimeout(() => {
+                  window.location.href = '/';
+                }, 1000);
+              }, 2000);
+            } else if (access_token && refresh_token) {
+              // Fallback: try to set session anyway
+              console.log('Setting session with tokens, unknown type:', type);
+              await supabase.auth.setSession({
+                access_token,
+                refresh_token
+              });
+              setStatus('success');
+              setMessage('Authentication successful! Opening AutoLens app...');
+              setTimeout(() => {
+                window.location.href = 'autolens://auth/success';
+                setTimeout(() => {
+                  window.location.href = '/';
+                }, 1000);
+              }, 2000);
+            } else {
+              // Unknown type or no tokens, redirect to home
+              console.log('Unknown auth type or no tokens:', type);
+              setStatus('error');
+              setMessage('Unknown authentication type. Redirecting to home...');
+              setTimeout(() => {
+                window.location.href = '/';
+              }, 3000);
+            }
+        }
+
       } catch (error) {
+        console.error('Auth callback error:', error);
         setStatus('error');
         setMessage('Authentication failed. Please try again or contact support.');
-        console.error('Auth callback error:', error);
+        
+        // Redirect to home after error
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 5000);
       }
     };
 
-    handleAuthCallback();
+    // Only run if we have relevant parameters
+    if (window.location.hash || window.location.search.includes('code=')) {
+      handleAuthCallback();
+    } else {
+      // No relevant parameters, redirect to home
+      setStatus('error');
+      setMessage('No authentication data found. Redirecting to home...');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 3000);
+    }
   }, []);
 
   return (
