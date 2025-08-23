@@ -18,7 +18,7 @@ export default function ConfirmEmail() {
         const refresh_token = hashParams.get('refresh_token');
         const type = hashParams.get('type');
 
-        if (type === 'signup' && access_token) {
+        if (type === 'signup' && access_token && refresh_token) {
           // Set the session
           const { data, error } = await supabase.auth.setSession({
             access_token,
