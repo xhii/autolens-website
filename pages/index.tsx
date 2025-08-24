@@ -98,29 +98,33 @@ export default function Home() {
           <div className="hero-visual">
             <div className="phones-container">
               <div className="iphone iphone-1">
-                <div className="iphone-screen map-screen">
-                  <div className="screen-header">📍 Nearby Spots</div>
-                  <div className="map-pins-demo">
-                    <div className="demo-pin demo-pin-1"></div>
-                    <div className="demo-pin demo-pin-2"></div>
-                    <div className="demo-pin demo-pin-3"></div>
-                  </div>
+                <div className="iphone-screen app-screenshot">
+                  <Image
+                    src="/app-screenshot-map.png"
+                    alt="AutoLens Map View"
+                    fill
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    quality={100}
+                    priority
+                  />
                 </div>
               </div>
               <div className="iphone iphone-2">
-                <div className="iphone-screen feed-screen">
-                  <div className="screen-header">🔥 Recent Shots</div>
-                  <div className="photo-feed">
-                    <div className="feed-item">
-                      <div className="feed-location">Pacific Coast Highway</div>
-                    </div>
-                    <div className="feed-item feed-item-2">
-                      <div className="feed-location">Downtown Parking Garage</div>
-                    </div>
-                    <div className="feed-item feed-item-3">
-                      <div className="feed-location">Mountain Pass</div>
-                    </div>
-                  </div>
+                <div className="iphone-screen app-screenshot">
+                  <Image
+                    src="/app-screenshot-favorites.png"
+                    alt="AutoLens Favorites View"
+                    fill
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    quality={100}
+                    priority
+                  />
                 </div>
               </div>
               <div className="stat-bubble stat-bubble-1">8,437 spots</div>
@@ -159,16 +163,16 @@ export default function Home() {
           <p>Real spots. Real shots. Updated daily.</p>
         </div>
         <div className="photo-grid">
-          <div className="photo-item">
+          <div className="photo-item" style={{ backgroundImage: 'url(/gallery-1.jpg)' }}>
             <div className="photo-location">Pacific Coast Highway, CA</div>
           </div>
-          <div className="photo-item">
+          <div className="photo-item" style={{ backgroundImage: 'url(/gallery-2.jpg)' }}>
             <div className="photo-location">Downtown LA Rooftop</div>
           </div>
-          <div className="photo-item">
+          <div className="photo-item" style={{ backgroundImage: 'url(/gallery-3.jpg)' }}>
             <div className="photo-location">Tail of the Dragon, TN</div>
           </div>
-          <div className="photo-item">
+          <div className="photo-item" style={{ backgroundImage: 'url(/gallery-4.jpg)' }}>
             <div className="photo-location">Brooklyn Bridge, NY</div>
           </div>
         </div>
@@ -176,9 +180,9 @@ export default function Home() {
 
       <section className="quote">
         <blockquote className="quote-text">
-          Finally, an app that gets it. Found three new spots in my city I never knew existed. Game changer.
+          Join the underground network of car photographers sharing their secret spots and favorite shooting locations.
         </blockquote>
-        <p className="quote-author">— Mike Chen, @autofocus</p>
+        <p className="quote-author">— Built by photographers, for photographers</p>
       </section>
 
       <section className="cta" id="download">

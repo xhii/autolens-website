@@ -204,28 +204,24 @@ h2 {
 }
 
 .iphone {
-  @apply w-[260px] h-[530px] bg-ink rounded-[40px] p-[10px] absolute border-[3px] border-ink;
+  @apply w-[300px] h-[650px] bg-ink rounded-[40px] p-[6px] absolute border-[3px] border-ink;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .iphone-screen {
-  @apply w-full h-full bg-paper rounded-[30px] overflow-hidden relative bg-cover bg-center;
+  @apply w-full h-full rounded-[30px] overflow-hidden relative;
 }
 
 /* Phone 1 - Map view */
 .iphone-1 {
-  transform: rotate(-5deg) translateX(-80px);
+  transform: rotate(-5deg) translateX(-90px);
   z-index: 2;
   animation: float-phone 4s ease-in-out infinite;
 }
 
-.iphone-1 .iphone-screen {
-  background-color: var(--sand);
-}
-
 /* Phone 2 - Photo feed */
 .iphone-2 {
-  transform: rotate(3deg) translateX(80px);
+  transform: rotate(3deg) translateX(90px);
   z-index: 3;
   animation: float-phone-2 4s ease-in-out infinite;
   animation-delay: 0.5s;
@@ -334,7 +330,7 @@ h2 {
 
 /* Photo Gallery Section */
 .gallery {
-  @apply py-24 px-8 bg-sand border-t-[3px] border-b-[3px] border-ink;
+  @apply py-24 px-8 bg-paper border-t-[3px] border-b-[3px] border-ink;
 }
 
 .gallery-header {
