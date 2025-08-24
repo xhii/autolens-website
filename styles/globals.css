@@ -270,14 +270,14 @@ h2 {
 }
 
 .stat-bubble-1 {
-  top: 20px;
-  left: -30px;
+  top: 30px;
+  left: -60px;
   transform: rotate(-3deg);
 }
 
 .stat-bubble-2 {
-  bottom: 40px;
-  right: -20px;
+  bottom: 60px;
+  right: -35px;
   transform: rotate(2deg);
 }
 

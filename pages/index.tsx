@@ -127,8 +127,8 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="stat-bubble stat-bubble-1">8,437 spots</div>
-              <div className="stat-bubble stat-bubble-2">127 tracks</div>
+              <div className="stat-bubble stat-bubble-1">Discover spots</div>
+              <div className="stat-bubble stat-bubble-2">Track locations</div>
             </div>
           </div>
         </div>
