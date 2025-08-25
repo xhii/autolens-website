@@ -449,7 +449,15 @@ footer {
 }
 
 .footer-links {
-  @apply flex gap-8 flex-wrap;
+  @apply flex gap-8 flex-wrap items-center;
+}
+
+.social-links {
+  @apply flex gap-4 items-center;
+}
+
+.social-link {
+  @apply text-ocean hover:text-rust transition-colors duration-200 p-1;
 }
 
 .footer-link {
