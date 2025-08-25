@@ -52,9 +52,8 @@ export default function Home() {
             />
           </Link>
           <div className="hidden md:flex gap-10 items-center">
-            <Link href="#features" className="nav-link">Features</Link>
-            <Link href="#gallery" className="nav-link">Spots</Link>
-            <Link href="#" className="nav-link">Stories</Link>
+            <Link href="/how-it-works" className="nav-link">How it works</Link>
+            <Link href="#gallery" className="nav-link">Gallery</Link>
             <Link href="#download" className="nav-app-btn">Get the app</Link>
           </div>
           {/* Mobile menu button */}
@@ -72,9 +71,8 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-paper border-b-2 border-ink">
             <div className="px-4 py-2 space-y-1">
-              <Link href="#features" className="block py-2 text-ink font-medium">Features</Link>
-              <Link href="#gallery" className="block py-2 text-ink font-medium">Spots</Link>
-              <Link href="#" className="block py-2 text-ink font-medium">Stories</Link>
+              <Link href="/how-it-works" className="block py-2 text-ink font-medium">How it works</Link>
+              <Link href="#gallery" className="block py-2 text-ink font-medium">Gallery</Link>
               <Link href="#download" className="block py-2 bg-ink text-paper text-center font-semibold">Get the app</Link>
             </div>
           </div>

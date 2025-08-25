@@ -8,7 +8,12 @@
       "Bash(npm run build:*)",
       "Bash(git add:*)",
       "Bash(git push:*)",
-      "Bash(git revert:*)"
+      "Bash(git revert:*)",
+      "Bash(copy:*)",
+      "Bash(cp:*)",
+      "Bash(magick:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
