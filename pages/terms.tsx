@@ -399,7 +399,7 @@ export default function Terms() {
 
                 <h3 className="text-2xl font-semibold mt-6 mb-3">17.5 Subscription Management</h3>
                 <ul className="list-disc pl-6 space-y-1 mb-4">
-                  <li>To manage your subscription, go to Settings > [Your Name] > Media & Purchases > View Account > Subscriptions on your iOS device</li>
+                  <li>To manage your subscription, go to Settings &gt; [Your Name] &gt; Media &amp; Purchases &gt; View Account &gt; Subscriptions on your iOS device</li>
                   <li>Changes to subscription plans take effect at the next billing cycle</li>
                   <li>Downgrading from annual to monthly billing will take effect at the end of your current annual period</li>
                 </ul>
