@@ -75,7 +75,6 @@ export default function Terms() {
             </div>
           </div>
         )}
-        </div>
       </nav>
 
       <section className="pt-32 pb-16 px-8">

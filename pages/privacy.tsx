@@ -75,7 +75,6 @@ export default function Privacy() {
             </div>
           </div>
         )}
-        </div>
       </nav>
 
       <section className="pt-32 pb-16 px-8">
