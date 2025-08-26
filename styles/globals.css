@@ -135,11 +135,12 @@ h2 {
 
 /* Hero Section */
 .hero {
-  @apply pt-32 pb-16 px-8 relative min-h-[85vh] flex items-center;
+  @apply pt-32 pb-20 px-8 relative min-h-[90vh] flex items-center;
 }
 
 .hero-wrapper {
   @apply max-w-[1400px] mx-auto grid lg:grid-cols-[1fr_0.8fr] gap-16 items-center;
+  position: relative;
 }
 
 .hero-title {
@@ -197,14 +198,17 @@ h2 {
 /* Hero Visual - iPhone mockups */
 .hero-visual {
   @apply relative flex items-center justify-center;
-  height: clamp(400px, 50vh, 600px);
-  min-height: 400px;
+  height: clamp(450px, 55vh, 650px);
+  min-height: 450px;
+  padding: 20px 0;
+  overflow: visible;
 }
 
 .phones-container {
   @apply relative w-full h-full flex items-center justify-center;
   max-width: 700px;
   margin: 0 auto;
+  contain: layout;
 }
 
 .iphone {
@@ -735,6 +739,53 @@ footer {
 
   .photo-grid {
     @apply grid-cols-2;
+  }
+}
+
+/* MacBook and larger screens */
+@media (min-width: 1280px) {
+  .hero-visual {
+    height: 550px;
+    max-height: 550px;
+  }
+
+  .phones-container {
+    max-width: 600px;
+  }
+
+  .iphone {
+    width: 260px;
+    height: 563px;
+    padding: 5px;
+    border-radius: 35px;
+  }
+
+  .iphone-1 {
+    transform: rotate(-5deg) translateX(-80px) translateY(0);
+  }
+
+  .iphone-2 {
+    transform: rotate(3deg) translateX(80px) translateY(0);
+  }
+
+  @keyframes float-phone {
+    0%, 100% { transform: rotate(-5deg) translateX(-80px) translateY(0); }
+    50% { transform: rotate(-5deg) translateX(-80px) translateY(-10px); }
+  }
+
+  @keyframes float-phone-2 {
+    0%, 100% { transform: rotate(3deg) translateX(80px) translateY(0); }
+    50% { transform: rotate(3deg) translateX(80px) translateY(-10px); }
+  }
+
+  .stat-bubble-1 {
+    top: 40px;
+    left: -30px;
+  }
+
+  .stat-bubble-2 {
+    bottom: 70px;
+    right: -30px;
   }
 }
 
