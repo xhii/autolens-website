@@ -220,7 +220,7 @@ export default function HowItWorks() {
           <div className="flex gap-8 flex-wrap items-center">
             <Link href="#" className="text-ocean hover:text-rust">Privacy</Link>
             <Link href="#" className="text-ocean hover:text-rust">Terms</Link>
-            <Link href="#" className="text-ocean hover:text-rust">Contact</Link>
+            <Link href="/support" className="text-ocean hover:text-rust">Support</Link>
             <div className="social-links">
               <Link href="https://x.com/autolensapp" className="social-link" title="Follow us on X">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
