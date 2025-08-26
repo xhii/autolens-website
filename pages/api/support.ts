@@ -36,7 +36,7 @@ export default async function handler(
     const data = await resend.emails.send({
       from: 'AutoLens Support <support@autolens.net>',
       to: ['lucas@xhil.io'],
-      reply_to: email,
+      replyTo: email,
       subject: `AutoLens Support: ${subject}`,
       html: `
         <h2>New Support Request</h2>

@@ -13,7 +13,8 @@
       "Bash(cp:*)",
       "Bash(magick:*)",
       "Bash(mkdir:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
