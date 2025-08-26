@@ -226,8 +226,8 @@ export default function Home() {
         <div className="footer-wrapper">
           <p>&copy; 2025 AutoLens</p>
           <div className="footer-links">
-            <Link href="#" className="footer-link">Privacy</Link>
-            <Link href="#" className="footer-link">Terms</Link>
+            <Link href="/privacy" className="footer-link">Privacy</Link>
+            <Link href="/terms" className="footer-link">Terms</Link>
             <Link href="/support" className="footer-link">Support</Link>
             <div className="social-links">
               <Link href="https://x.com/autolensapp" className="social-link" title="Follow us on X">

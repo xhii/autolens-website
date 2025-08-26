@@ -218,8 +218,8 @@ export default function HowItWorks() {
         <div className="max-w-[1400px] mx-auto flex justify-between items-center flex-wrap gap-8">
           <p>&copy; 2025 AutoLens</p>
           <div className="flex gap-8 flex-wrap items-center">
-            <Link href="#" className="text-ocean hover:text-rust">Privacy</Link>
-            <Link href="#" className="text-ocean hover:text-rust">Terms</Link>
+            <Link href="/privacy" className="text-ocean hover:text-rust">Privacy</Link>
+            <Link href="/terms" className="text-ocean hover:text-rust">Terms</Link>
             <Link href="/support" className="text-ocean hover:text-rust">Support</Link>
             <div className="social-links">
               <Link href="https://x.com/autolensapp" className="social-link" title="Follow us on X">
