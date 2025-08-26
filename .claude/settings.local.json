@@ -18,7 +18,8 @@
       "Bash(curl:*)",
       "Bash(taskkill:*)",
       "Bash(powershell:*)",
-      "Read(/C:\\Users\\csxh\\OneDrive\\Pictures\\Screenshots/**)"
+      "Read(/C:\\Users\\csxh\\OneDrive\\Pictures\\Screenshots/**)",
+      "Bash(npm i @vercel/analytics)"
     ],
     "deny": [],
     "ask": []
