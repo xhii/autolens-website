@@ -196,32 +196,45 @@ h2 {
 
 /* Hero Visual - iPhone mockups */
 .hero-visual {
-  @apply relative h-[500px] flex items-center justify-center;
+  @apply relative flex items-center justify-center;
+  height: clamp(400px, 50vh, 600px);
+  min-height: 400px;
 }
 
 .phones-container {
   @apply relative w-full h-full flex items-center justify-center;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .iphone {
-  @apply w-[300px] h-[650px] bg-ink rounded-[40px] p-[6px] absolute border-[3px] border-ink;
+  @apply bg-ink absolute border-[3px] border-ink;
+  width: clamp(200px, 20vw, 300px);
+  height: clamp(433px, 43.3vw, 650px);
+  padding: clamp(4px, 0.4vw, 6px);
+  border-radius: clamp(26px, 2.6vw, 40px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .iphone-screen {
-  @apply w-full h-full rounded-[30px] overflow-hidden relative;
+  @apply w-full h-full overflow-hidden relative bg-ink;
+  border-radius: clamp(20px, 2vw, 30px);
+}
+
+.app-screenshot {
+  @apply bg-ink;
 }
 
 /* Phone 1 - Map view */
 .iphone-1 {
-  transform: rotate(-5deg) translateX(-90px);
+  transform: rotate(-5deg) translateX(clamp(-60px, -6vw, -90px));
   z-index: 2;
   animation: float-phone 4s ease-in-out infinite;
 }
 
 /* Phone 2 - Photo feed */
 .iphone-2 {
-  transform: rotate(3deg) translateX(90px);
+  transform: rotate(3deg) translateX(clamp(60px, 6vw, 90px));
   z-index: 3;
   animation: float-phone-2 4s ease-in-out infinite;
   animation-delay: 0.5s;
@@ -271,13 +284,13 @@ h2 {
 
 .stat-bubble-1 {
   top: 30px;
-  left: -60px;
+  left: -45px;
   transform: rotate(-3deg);
 }
 
 .stat-bubble-2 {
   bottom: 60px;
-  right: -35px;
+  right: -45px;
   transform: rotate(2deg);
 }
 
@@ -770,13 +783,13 @@ footer {
 
 /* Animations */
 @keyframes float-phone {
-  0%, 100% { transform: rotate(-5deg) translateX(-80px) translateY(0); }
-  50% { transform: rotate(-5deg) translateX(-80px) translateY(-10px); }
+  0%, 100% { transform: rotate(-5deg) translateX(clamp(-60px, -6vw, -90px)) translateY(0); }
+  50% { transform: rotate(-5deg) translateX(clamp(-60px, -6vw, -90px)) translateY(-10px); }
 }
 
 @keyframes float-phone-2 {
-  0%, 100% { transform: rotate(3deg) translateX(80px) translateY(0); }
-  50% { transform: rotate(3deg) translateX(80px) translateY(-10px); }
+  0%, 100% { transform: rotate(3deg) translateX(clamp(60px, 6vw, 90px)) translateY(0); }
+  50% { transform: rotate(3deg) translateX(clamp(60px, 6vw, 90px)) translateY(-10px); }
 }
 
 /* Smooth scrolling */

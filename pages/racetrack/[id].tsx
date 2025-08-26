@@ -1,6 +1,7 @@
   import { useEffect } from 'react';
   import { useRouter } from 'next/router';
   import Head from 'next/head';
+  import Footer from '@/components/Footer';
 
   export default function RacetrackPage() {
     const router = useRouter();
@@ -182,23 +183,7 @@
             </div>
           </div>
 
-          {/* Footer */}
-          <footer style={{
-            position: 'fixed',
-            bottom: 0,
-            width: '100%',
-            padding: '1rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-            background: '#1a1a1a'
-          }}>
-            <div style={{
-              fontSize: '0.875rem',
-              color: '#666',
-              textAlign: 'center'
-            }}>
-              © 2025 AutoLens
-            </div>
-          </footer>
+          <Footer />
         </div>
       </>
     );
