@@ -227,7 +227,7 @@ export default function HowItWorks() {
           <h2 className="text-3xl font-bold mb-4">Ready to find your next shot?</h2>
           <p className="text-xl mb-8 opacity-90">Join thousands of car photographers already using AutoLens</p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Link href="/#download" className="bg-paper text-ink px-8 py-4 font-bold hover:transform hover:-translate-y-1 transition-all">
+            <Link href="https://apps.apple.com/us/app/autolens-car-photography/id6748659107" target="_blank" rel="noopener noreferrer" className="bg-paper text-ink px-8 py-4 font-bold hover:transform hover:-translate-y-1 transition-all">
               Download for iOS
             </Link>
             <Link href="/#download" className="bg-paper text-ink px-8 py-4 font-bold hover:transform hover:-translate-y-1 transition-all">

@@ -217,7 +217,7 @@ export default function Home() {
           <h2>Ready to level up?</h2>
           <p className="cta-subtitle">Join the growing community of photographers sharing new locations</p>
           <div className="download-options">
-            <Link href="#" className="download-btn">iOS App Store</Link>
+            <Link href="https://apps.apple.com/us/app/autolens-car-photography/id6748659107" target="_blank" rel="noopener noreferrer" className="download-btn">iOS App Store</Link>
             <Link href="#" className="download-btn">Google Play</Link>
           </div>
         </div>
